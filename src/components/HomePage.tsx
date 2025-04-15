@@ -17,8 +17,13 @@ import {
   Factory
 } from 'lucide-react';
 import { services } from '../data/services';
+import { BusinessConfig } from '../data/config';
 
-export default function HomePage() {
+interface HomePageProps {
+  config: BusinessConfig;
+}
+
+export default function HomePage({ config }: HomePageProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -29,44 +34,29 @@ export default function HomePage() {
   return (
     <div className="pt-16">
       <SEOHead
-        title="SA Gutter | Custom Seamless Gutters & Professional Installation"
-        description="Expert seamless gutter manufacturing & installation in South Africa. Specializing in Colorlume®, residential & commercial guttering solutions. 10-year warranty."
+        title={`${config.businessName} | Custom Seamless Gutters & Professional Installation`}
+        description={config.seo.description}
       />
+
       {/* Hero Section */}
-      <div
-        className="relative bg-cover bg-center min-h-[600px] lg:h-screen"
-        style={{
-          backgroundImage: "url('/images/Seamless gutters/Rain gutter Main 1920x800 (1).jpg')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-60" />
-        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 h-full flex items-center">
-          <div>
-            <h1 className={`text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl ${isVisible ? 'animate' : ''}`}>
-              South Africa's Leading
-              <br />
-              Seamless Gutter Manufacturer
-            </h1>
-            <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-white max-w-3xl">
-              Custom manufactured seamless gutters for residential and commercial properties.
-              Professional installation and maintenance services across South Africa.
-            </p>
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4">
-              <a
-                href="tel:0832323215"
-                className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-gray-900 w-full sm:w-auto"
-              >
-                <Phone className="mr-2 h-5 w-5" />
-                Call Now
-              </a>
-              <Link
-                to="/quote"
-                className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#1F732C] hover:bg-opacity-90 w-full sm:w-auto"
-              >
-                Get a Quote
-              </Link>
-            </div>
+      <div className="relative bg-gray-900">
+        {config.heroImage && (
+          <div className="absolute inset-0">
+            <img
+              className="w-full h-full object-cover"
+              src={config.heroImage}
+              alt="Hero background"
+            />
+            <div className="absolute inset-0 bg-gray-900 mix-blend-multiply" />
           </div>
+        )}
+        <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Professional {config.businessType} Services in {config.contactInfo.city}
+          </h1>
+          <p className="mt-6 text-xl text-gray-300 max-w-3xl">
+            {config.seo.description}
+          </p>
         </div>
       </div>
 

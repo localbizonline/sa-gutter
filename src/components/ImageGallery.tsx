@@ -8,21 +8,9 @@ interface ImageInfo {
 }
 
 export default function ImageGallery() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(window.location.hostname === 'localhost');
   const [images, setImages] = useState<ImageInfo[]>([]);
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === '1234') {
-      setIsAuthenticated(true);
-      setError('');
-    } else {
-      setError('Incorrect password');
-    }
-  };
 
   const copyToClipboard = (path: string) => {
     navigator.clipboard.writeText(path);

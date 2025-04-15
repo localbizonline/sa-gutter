@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { services } from '../data/services';
+import { BusinessConfig } from '../data/config';
 
-export default function Navbar() {
+interface NavbarProps {
+  config: BusinessConfig;
+}
+
+export default function Navbar({ config }: NavbarProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isServicesOpen, setIsServicesOpen] = React.useState(false);
   const servicesRef = React.useRef<HTMLDivElement>(null);
@@ -25,11 +30,17 @@ export default function Navbar() {
         <div className="flex justify-between h-12">
           <div className="flex">
             <Link to="/" className="flex-shrink-0 flex items-center" aria-label="Home">
-              <img 
-                src="/images/Logo SA Gutters Green.jpeg" 
-                alt="SA Gutter Logo" 
-                className="h-12 w-auto"
-              />
+              {config.logo ? (
+                <img 
+                  src={config.logo} 
+                  alt={`${config.businessName} Logo`} 
+                  className="h-12 w-auto"
+                />
+              ) : (
+                <span className="text-2xl font-bold text-[#1F732C]">
+                  {config.businessName}
+                </span>
+              )}
             </Link>
           </div>
 

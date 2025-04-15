@@ -14,16 +14,19 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ThankYouPage from './components/ThankYouPage';
 import MobileActions from './components/MobileActions';
-import { defaultConfig } from './data/config';
+import ConfigManager from './components/ConfigManager';
+import { useConfig } from './hooks/useConfig';
 
 function App() {
+  const { config, updateConfig } = useConfig();
+
   return (
     <Router>
       <div className="min-h-screen bg-white">
         <ScrollToTop />
-        <Navbar />
+        <Navbar config={config} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage config={config} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services/fascia-and-barge-boards" element={<FasciaServicePage />} />
           <Route path="/services/specialized-gutters" element={<SpecializedGuttersPage />} />
@@ -33,8 +36,9 @@ function App() {
           <Route path="/quote" element={<QuoteForm />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/services/:serviceId" element={<ServicePage />} />
+          <Route path="/config" element={<ConfigManager updateConfig={updateConfig} />} />
         </Routes>
-        <Footer config={defaultConfig} />
+        <Footer config={config} />
         <MobileActions />
       </div>
     </Router>
